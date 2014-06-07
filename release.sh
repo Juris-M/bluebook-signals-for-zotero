@@ -152,7 +152,6 @@ rm -f install.bak  update.bak  updateInfo.xhtml  update.rdf
 echo $((REVISION++))
 echo $REVISION > version_count.txt
 git commit -m "Pre-release update" -a
-cd ..
 git push
 git checkout gh-pages
 unzip bluebook-signals-for-zotero.zip
