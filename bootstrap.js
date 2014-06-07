@@ -68,14 +68,15 @@ WindowWatcher.prototype = {
                     var menuItemElem = document.createElement('menuitem');
                     var firstChar = signals[i].slice(0,1);
                     var remainderChars = signals[i].slice(1);
-                    menuItemElem.setAttribute('value','<i>' + firstChar.toUpperCase() + remainderChars + '</i>');
-                    menuItemElem.setAttribute('label',firstChar.toUpperCase() + remainderChars);
+                    var val = (firstChar.toUpperCase() + remainderChars);
+                    menuItemElem.setAttribute('value',italicize(val));
+                    menuItemElem.setAttribute('label',val);
                     menuItemElem.setAttribute('oncommand','setSignal(this,event);')
                     signalsPopupElem.appendChild(menuItemElem);
                 }
                 for (var i=0,ilen=signals.length;i<ilen;i+=1) {
                     var menuItemElem = document.createElement('menuitem');
-                    menuItemElem.setAttribute('value','<i>' + signals[i] + '</i>');
+                    menuItemElem.setAttribute('value',italicize(signals[i]));
                     menuItemElem.setAttribute('label',signals[i]);
                     menuItemElem.setAttribute('oncommand','setSignal(this,event);')
                     signalsPopupElem.appendChild(menuItemElem);
@@ -83,18 +84,35 @@ WindowWatcher.prototype = {
                 popupSet.appendChild(signalsPopupElem);
             }
 
+            function italicize (str) {
+                if (str.slice(-1) === ',') {
+                    str = '<i>' + str.slice(0,-1) + '</i>' + str.slice(-1);
+                } else {
+                    str = '<i>' + str + '</i>';
+                }
+                return str;
+            }
+
             function addFieldListener(window,document) {
 
 
                 window.setSignal = function (node,event) {
                     var signalElem = event.target;
+                    var signal = signalElem.getAttribute('value');
                     var fieldElem = node.parentNode.anchorNode;
                     var selectionStart = fieldElem.selectionStart;
                     var selectionEnd = fieldElem.selectionEnd;
                     var val = fieldElem.value;
                     var start = val.slice(0,selectionStart);
                     var end = val.slice(selectionEnd);
-                    fieldElem.value = start + signalElem.getAttribute('value') + end;
+                    // Add spacing
+                    if (start.length) {
+                        signal = ' ' + signal
+                    }
+                    signal = signal + ' ';
+                    // Normalize spaces
+                    val = (start + signal + end).replace(/\s+/g, ' ');
+                    fieldElem.value = val;
                 };
 
                 // Open menu on hotkey
