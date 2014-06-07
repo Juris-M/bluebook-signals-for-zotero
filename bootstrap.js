@@ -55,13 +55,24 @@ WindowWatcher.prototype = {
                 var popupSet = document.getElementsByTagName('popupset')[0];
                 if (!popupSet) {
                     popupSet = document.createElement('popupset');
-                    fieldElem.parentNode.insertBefore(popupSet,fieldElem);
+                    var lastChild = document.childNodes[document.childNodes.length-1];
+                    var firstGrandChild = lastChild.childNodes[0];
+                    lastChild.insertBefore(popupSet,firstGrandChild);
                 }
                 
                 var signalsPopupElem = document.createElement('menupopup');
                 signalsPopupElem.setAttribute('id','signals-popup');
                 var branch = Services.prefs.getDefaultBranch(PREF_BRANCH);
                 var signals = JSON.parse(branch.getCharPref('signals'));
+                for (var i=0,ilen=signals.length;i<ilen;i+=1) {
+                    var menuItemElem = document.createElement('menuitem');
+                    var firstChar = signals[i].slice(0,1);
+                    var remainderChars = signals[i].slice(1);
+                    menuItemElem.setAttribute('value','<i>' + firstChar.toUpperCase() + remainderChars + '</i>');
+                    menuItemElem.setAttribute('label',firstChar.toUpperCase() + remainderChars);
+                    menuItemElem.setAttribute('oncommand','setSignal(this,event);')
+                    signalsPopupElem.appendChild(menuItemElem);
+                }
                 for (var i=0,ilen=signals.length;i<ilen;i+=1) {
                     var menuItemElem = document.createElement('menuitem');
                     menuItemElem.setAttribute('value','<i>' + signals[i] + '</i>');
