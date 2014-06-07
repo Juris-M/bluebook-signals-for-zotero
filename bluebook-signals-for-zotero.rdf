@@ -2,22 +2,22 @@
 <RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$qqbgL1"
+  <RDF:Description RDF:about="rdf:#$Qmk9m3"
                    NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
                    NS1:minVersion="17"
                    NS1:maxVersion="29.*"
                    NS1:updateLink="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xpi"
                    NS1:updateInfoURL="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xhtml"
-                   NS1:updateHash="sha1:9c59e1194ecdbc2eb9f6e1ea48625741359e3e0b" />
-  <RDF:Seq RDF:about="rdf:#$mqbgL1">
-    <RDF:li RDF:resource="rdf:#$nqbgL1"/>
-  </RDF:Seq>
-  <RDF:Description RDF:about="rdf:#$nqbgL1"
-                   NS1:version="1.0.4">
-    <NS1:targetApplication RDF:resource="rdf:#$qqbgL1"/>
+                   NS1:updateHash="sha1:ddd72fdcac5b04fd546facdf47968cb2444b3b84" />
+  <RDF:Description RDF:about="rdf:#$Nmk9m3"
+                   NS1:version="1.0.5">
+    <NS1:targetApplication RDF:resource="rdf:#$Qmk9m3"/>
   </RDF:Description>
   <RDF:Description RDF:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com"
-                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBAK3wmBc2P1xeVHX6PoWT3C01K0qaBaRoVhJhkbOO4zBa4kgI1TKuY7Ksy4Dds23NTpJ4lrQyCrTpOJLbFWTcc4otn0vEDUMmQMb6oCnpg1UOTwf7delqU7gw9OtmIvHcXlwhtg4cLRPqTFwLYFH8jRHSA4wFSXQVkqGAg2hWQImH">
-    <NS1:updates RDF:resource="rdf:#$mqbgL1"/>
+                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBALWzTajU7BUf92fzNWC9YeaPow1+UR0VBcHe8xTMQg3fs+SUNK7fwVSg0a68ozic98l/6lYiia9fW1gLJ/bCgzGYCWhADM4fgqWxvQKxg+JXYUPvpPH+W6Zsftryf/iifmVCOjsASvdkS8BFr5p90yCLm+ZNu7OrQWNrp473bW3k">
+    <NS1:updates RDF:resource="rdf:#$Mmk9m3"/>
   </RDF:Description>
+  <RDF:Seq RDF:about="rdf:#$Mmk9m3">
+    <RDF:li RDF:resource="rdf:#$Nmk9m3"/>
+  </RDF:Seq>
 </RDF:RDF>
