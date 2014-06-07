@@ -147,7 +147,7 @@ fi
 ### Send the new xpi to the distro site
 cp update.rdf bluebook-signals-for-zotero.rdf
 cp updateInfo.xhtml bluebook-signals-for-zotero.xhtml
-zip rtf-odf-scan-for-zotero.zip bluebook-signals-for-zotero.*
+zip bluebook-signals-for-zotero.zip bluebook-signals-for-zotero.*
 rm -f install.bak  update.bak  updateInfo.xhtml  update.rdf
 echo $((REVISION++))
 echo $REVISION > version_count.txt
