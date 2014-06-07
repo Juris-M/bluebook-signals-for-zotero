@@ -2,22 +2,22 @@
 <RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$6SKDb2"
+  <RDF:Description RDF:about="rdf:#$qqbgL1"
                    NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
                    NS1:minVersion="17"
                    NS1:maxVersion="29.*"
                    NS1:updateLink="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xpi"
                    NS1:updateInfoURL="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xhtml"
-                   NS1:updateHash="sha1:660e62d08983749071e202bbe99d901c8c4057de" />
-  <RDF:Description RDF:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com"
-                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBADOuXLKQh/ojTDpBvIayZV2T9FwcXvTRB6ZDlfpE4ieyN26cr1dzzrFNkw48TKshYcXrwKQnMJ/V5y6/DMOgVbf8fTpJKcOP6JRHALY6n0sxK1vV4r4PlebbDBc2GsuKxUcMkjB43zt+6+/rp1RjoHBI0tg9j45ug/KxLTHwMYWt">
-    <NS1:updates RDF:resource="rdf:#$2SKDb2"/>
-  </RDF:Description>
-  <RDF:Seq RDF:about="rdf:#$2SKDb2">
-    <RDF:li RDF:resource="rdf:#$3SKDb2"/>
+                   NS1:updateHash="sha1:9c59e1194ecdbc2eb9f6e1ea48625741359e3e0b" />
+  <RDF:Seq RDF:about="rdf:#$mqbgL1">
+    <RDF:li RDF:resource="rdf:#$nqbgL1"/>
   </RDF:Seq>
-  <RDF:Description RDF:about="rdf:#$3SKDb2"
-                   NS1:version="1.0.2">
-    <NS1:targetApplication RDF:resource="rdf:#$6SKDb2"/>
+  <RDF:Description RDF:about="rdf:#$nqbgL1"
+                   NS1:version="1.0.4">
+    <NS1:targetApplication RDF:resource="rdf:#$qqbgL1"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com"
+                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBAK3wmBc2P1xeVHX6PoWT3C01K0qaBaRoVhJhkbOO4zBa4kgI1TKuY7Ksy4Dds23NTpJ4lrQyCrTpOJLbFWTcc4otn0vEDUMmQMb6oCnpg1UOTwf7delqU7gw9OtmIvHcXlwhtg4cLRPqTFwLYFH8jRHSA4wFSXQVkqGAg2hWQImH">
+    <NS1:updates RDF:resource="rdf:#$mqbgL1"/>
   </RDF:Description>
 </RDF:RDF>
