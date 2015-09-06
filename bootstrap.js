@@ -1,89 +1,106 @@
-const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+const {classes: Cc, interfaces: Ci, utils: Cu, results: Cr} = Components;
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
-const PREF_BRANCH = "extensions.zotero.integration";
-const PREFS = {
-    "signals":'["e.g.,","accord","see","see also","see, e.g.,","cf.","contra","but see","see generally"]'
-};
-
-function setDefaultPrefs() {
-  let branch = Services.prefs.getDefaultBranch(PREF_BRANCH);
-  for (let [key, val] in Iterator(PREFS)) {
-    switch (typeof val) {
-      case "boolean":
-        branch.setBoolPref(key, val);
-        break;
-      case "number":
-        branch.setIntPref(key, val);
-        break;
-      case "string":
-        branch.setCharPref(key, val);
-        break;
-    }
-  }
-}
-
-// Travelling object that holds the windows to which a listener and command have been attached
-var watchedWindows = {};
-
-/**
- * Apply a callback to each open and new browser windows.
- *
- * @usage watchWindows(callback): Apply a callback to each browser window.
- * @param [function] callback: 1-parameter function that gets a browser window.
+/*
+ * Preferences support
+ * From https://developer.mozilla.org/en-US/Add-ons/How_to_convert_an_overlay_extension_to_restartless
  */
-function WindowWatcher(callback) {
-    this.register();
-    this.callback = callback;
+function getGenericPref(branch,prefName) {
+    switch (branch.getPrefType(prefName)) {
+    default:
+    case 0:   return undefined;                      // PREF_INVALID
+    case 32:  return getUCharPref(prefName,branch);  // PREF_STRING
+    case 64:  return branch.getIntPref(prefName);    // PREF_INT
+    case 128: return branch.getBoolPref(prefName);   // PREF_BOOL
+    }
+}
+function setGenericPref(branch,prefName,prefValue) {
+    switch (typeof prefValue) {
+    case "string":
+        setUCharPref(prefName,prefValue,branch);
+        return;
+    case "number":
+        branch.setIntPref(prefName,prefValue);
+        return;
+    case "boolean":
+        branch.setBoolPref(prefName,prefValue);
+        return;
+    }
+}
+function setDefaultPref(prefName,prefValue) {
+    var defaultBranch = Services.prefs.getDefaultBranch(null);
+    setGenericPref(defaultBranch,prefName,prefValue);
+}
+function getUCharPref(prefName,branch) { // Unicode getCharPref
+    branch = branch ? branch : Services.prefs;
+    return branch.getComplexValue(prefName, Components.interfaces.nsISupportsString).data;
+}
+function setUCharPref(prefName,text,branch) { // Unicode setCharPref
+    var string = Components.classes["@mozilla.org/supports-string;1"]
+        .createInstance(Components.interfaces.nsISupportsString);
+    string.data = text;
+    branch = branch ? branch : Services.prefs;
+    branch.setComplexValue(prefName, Components.interfaces.nsISupportsString, string);
 }
 
-WindowWatcher.prototype = {
-
-    watchedWindows:{},
-
+/*
+ * Add functionality to window document
+ */
+var ObservePopups = function () {};
+ObservePopups.prototype = {
     observe: function(subject, topic, data) {
-        // Do your stuff here.
-        if (topic == "domwindowopened") {
+        var wnd = subject.QueryInterface(Components.interfaces.nsIDOMWindow);
+        wnd.addEventListener("DOMContentLoaded", function (event) {
+            // XXX Check that this document qualifies, and return immediately if not.
+            var doc = event.target;
+            var winID = doc.documentElement.getAttribute('windowtype');
+            if (winID != 'zotero:item-selector' && winID != 'zotero:quick-item-selector') return;
 
-            function installMenu (window,document) {
-                var document = window.document;
-                
-                // Check for presence of menu
-                // Install if not present
-                var fieldElem = document.getElementById('prefix');
+            dump("XXX Signals are go!\n");
 
-                var popupSet = document.getElementsByTagName('popupset')[0];
-                if (!popupSet) {
-                    popupSet = document.createElement('popupset');
-                    var lastChild = document.childNodes[document.childNodes.length-1];
-                    var firstGrandChild = lastChild.childNodes[0];
-                    lastChild.insertBefore(popupSet,firstGrandChild);
+            var popupSet = doc.getElementsByTagName('popupset')[0];
+            if (popupSet) return;
+
+            dump("XXX Signals are GO!\n");
+
+            // (1) popupset node
+            popupSet = doc.createElement('popupset');
+            var lastChild = doc.childNodes[doc.childNodes.length-1];
+            var firstGrandChild = lastChild.childNodes[0];
+            lastChild.insertBefore(popupSet,firstGrandChild);
+            
+            // (2) Keyboard handler
+            function showMenu (event) {
+                if (event.keyCode==83 && event.ctrlKey) {
+                    event.preventDefault();
+                    // Open popup menu
+                    var signalsPopup = doc.getElementById('signals-popup');
+                    signalsPopup.openPopup(event.target, "after_start", 0, 0, false, false);
                 }
-                
-                var signalsPopupElem = document.createElement('menupopup');
-                signalsPopupElem.setAttribute('id','signals-popup');
-                var branch = Services.prefs.getDefaultBranch(PREF_BRANCH);
-                var signals = JSON.parse(branch.getCharPref('signals'));
-                for (var i=0,ilen=signals.length;i<ilen;i+=1) {
-                    var menuItemElem = document.createElement('menuitem');
-                    var firstChar = signals[i].slice(0,1);
-                    var remainderChars = signals[i].slice(1);
-                    var val = (firstChar.toUpperCase() + remainderChars);
-                    menuItemElem.setAttribute('value',italicize(val));
-                    menuItemElem.setAttribute('label',val);
-                    menuItemElem.setAttribute('oncommand','setSignal(this,event);')
-                    signalsPopupElem.appendChild(menuItemElem);
-                }
-                for (var i=0,ilen=signals.length;i<ilen;i+=1) {
-                    var menuItemElem = document.createElement('menuitem');
-                    menuItemElem.setAttribute('value',italicize(signals[i]));
-                    menuItemElem.setAttribute('label',signals[i]);
-                    menuItemElem.setAttribute('oncommand','setSignal(this,event);')
-                    signalsPopupElem.appendChild(menuItemElem);
-                }
-                popupSet.appendChild(signalsPopupElem);
             }
 
+            // (3) Signal insert event handler
+            wnd.setSignal = function(node, event) {
+                var signalElem = event.target;
+                var signal = signalElem.getAttribute('value');
+                var fieldElem = node.parentNode.anchorNode;
+                var selectionStart = fieldElem.selectionStart;
+                var selectionEnd = fieldElem.selectionEnd;
+                var val = fieldElem.value;
+                var start = val.slice(0,selectionStart);
+                var end = val.slice(selectionEnd);
+                // Add spacing
+                if (start.length) {
+                    signal = ' ' + signal
+                }
+                signal = signal + ' ';
+                // Normalize spaces
+                val = (start + signal + end).replace(/\s+/g, ' ');
+                fieldElem.value = val;
+            }
+
+            // (4) Utility function to apply italics
             function italicize (str) {
                 if (str.slice(-1) === ',') {
                     str = '<i>' + str.slice(0,-1) + '</i>' + str.slice(-1);
@@ -93,124 +110,63 @@ WindowWatcher.prototype = {
                 return str;
             }
 
-            function addFieldListener(window,document) {
-
-
-                window.setSignal = function (node,event) {
-                    var signalElem = event.target;
-                    var signal = signalElem.getAttribute('value');
-                    var fieldElem = node.parentNode.anchorNode;
-                    var selectionStart = fieldElem.selectionStart;
-                    var selectionEnd = fieldElem.selectionEnd;
-                    var val = fieldElem.value;
-                    var start = val.slice(0,selectionStart);
-                    var end = val.slice(selectionEnd);
-                    // Add spacing
-                    if (start.length) {
-                        signal = ' ' + signal
-                    }
-                    signal = signal + ' ';
-                    // Normalize spaces
-                    val = (start + signal + end).replace(/\s+/g, ' ');
-                    fieldElem.value = val;
-                };
-
-                // Open menu on hotkey
-                function showMenu (event) {
-                    if (event.keyCode==83 && event.ctrlKey) {
-                        event.preventDefault();
-                        // Open popup menu
-                        var signalsPopup = document.getElementById('signals-popup');
-                        signalsPopup.openPopup(event.target, "after_start", 0, 0, false, false);
-                    }
-                }
-
-                installMenu(window,document);
-                var fieldElem = document.getElementById('prefix');
-                fieldElem.addEventListener('keydown',showMenu);
+            // (4) Junk to build the menu
+            var signalsPopupElem = doc.createElement('menupopup');
+            signalsPopupElem.setAttribute('id','signals-popup');
+            var branch = Services.prefs.getBranch('extensions.bluebook-signals.');
+            var signals = JSON.parse(getGenericPref(branch, 'signals'));
+            for (var i=0,ilen=signals.length;i<ilen;i+=1) {
+                var menuItemElem = doc.createElement('menuitem');
+                var firstChar = signals[i].slice(0,1);
+                var remainderChars = signals[i].slice(1);
+                var val = (firstChar.toUpperCase() + remainderChars);
+                menuItemElem.setAttribute('value',italicize(val));
+                menuItemElem.setAttribute('label',val);
+                menuItemElem.setAttribute('oncommand','setSignal(this, event)')
+                signalsPopupElem.appendChild(menuItemElem);
             }
+            for (var i=0,ilen=signals.length;i<ilen;i+=1) {
+                var menuItemElem = doc.createElement('menuitem');
+                menuItemElem.setAttribute('value',italicize(signals[i]));
+                menuItemElem.setAttribute('label',signals[i]);
+                menuItemElem.setAttribute('oncommand','setSignal(this, event)')
+                signalsPopupElem.appendChild(menuItemElem);
+            }
+            popupSet.appendChild(signalsPopupElem);
 
-            function watcher(window) {
-                let {documentElement} = window.document;
-                var windowType = documentElement.getAttribute("windowtype");
-                if (windowType == "zotero:item-selector" || windowType == "zotero:quick-item-selector") {
-                    watchedWindows[windowType] = window;
-                    var fieldElem = window.document.getElementById('prefix');
-                    if (!fieldElem) return;
-                    addFieldListener(window,window.document);
-                }
-            };
-
-            function runOnLoad() {
-                watcher(subject);
-            };
-
-            subject.addEventListener("load", runOnLoad, false);
-        }
+            // (5) Install the keyboard handler and hope for the best
+            var fieldElem = doc.getElementById('prefix');
+            fieldElem.addEventListener('keydown',showMenu);
+        }, false);
     },
     register: function() {
         var observerService = Components.classes["@mozilla.org/observer-service;1"]
             .getService(Components.interfaces.nsIObserverService);
-        observerService.addObserver(this, "windowWatcherID", false);
+        observerService.addObserver(this, "chrome-document-global-created", false);
     },
     unregister: function() {
-
-        fieldElem.removeEventListener('keydown',callShowMenu);
-
         var observerService = Components.classes["@mozilla.org/observer-service;1"]
             .getService(Components.interfaces.nsIObserverService);
-        observerService.removeObserver(this, "windowWatcherID");
+        observerService.removeObserver(this, "chrome-document-global-created");
     }
 }
-var windowWatcher = new WindowWatcher;
+var observePopups = new ObservePopups();
 
-function watchWindows(disableWatcher) {
-    if (disableWatcher) {
-        Services.ww.unregisterNotification(windowWatcher);
-    } else {
-        Services.ww.registerNotification(windowWatcher);
-    }
+
+/*
+ * Bootstrap functions
+ */
+function startup (data, reason) {
+    // Set up preferences
+    Services.scriptloader.loadSubScript("chrome://bluebook-signals/content/defaultprefs.js",
+                                        {pref:setDefaultPref} );
+    //observeStartup.register();
+    observePopups.register();
 }
 
-
-
-
-/**
- * Handle the add-on being activated on install/enable
- */
-function startup(data, reason) {
-    // Shift all open and new browser windows
-    setDefaultPrefs();
-    watchWindows();
+function shutdown (data, reason) {
+    observePopups.unregister();
 }
 
-/**
- * Handle the add-on being deactivated on uninstall/disable
- */
-function shutdown(data, reason) {
-    if (reason != APP_SHUTDOWN) {
-        for (key in watchedWindows) {
-            try {
-                var win = watchedWindows[key];
-                var doc = win.document;
-                // true is for removal of listener
-                addFieldListener(win,doc,true);
-            } catch (e) {
-                dump("Bluebook Signals for Zotero: OOPS during unload: "+e+"\n");
-            }
-        }
-    }
-    // true is for removal of registered observer
-    watchWindows(true);
-}
-
-/**
- * Handle the add-on being installed
- */
-function install(data, reason) {}
-
-/**
- * Handle the add-on being uninstalled
- */
-function uninstall(data, reason) {};
-
+function install (data, reason) {}
+function uninstall (data, reason) {}

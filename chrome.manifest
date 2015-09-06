@@ -1,3 +1,3 @@
-content   bluebook-signals-for-zotero                 chrome/content/
-skin      bluebook-signals-for-zotero   default   chrome/skin/
-locale    bluebook-signals-for-zotero   en-US         chrome/locale/en-US/
+content   bluebook-signals   chrome/content/
+skin      bluebook-signals   default          chrome/skin/
+locale    bluebook-signals   en-US            chrome/locale/en-US/
