@@ -136,7 +136,7 @@ if [ "${ALL_CHECKED_IN}" == "1" ]; then
   sed -si "s/##SHA1HASH##/${SHA1}/g" update.rdf
 
   ### Run McCoy to set the key in install and sign the update
-  /home/bennett/src/mccoy/mccoy /home/bennett/src/bluebook-signals-for-zotero/
+  #/home/bennett/src/mccoy/mccoy /home/bennett/src/bluebook-signals-for-zotero/
 
   askifok "Upload newly built xpi?"
 else
