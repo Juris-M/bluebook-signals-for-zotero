@@ -1,23 +1,26 @@
 <?xml version="1.0"?>
-<RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
-         xmlns:NC="http://home.netscape.com/NC-rdf#"
-         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$Qmk9m3"
-                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   NS1:minVersion="17"
-                   NS1:maxVersion="29.*"
-                   NS1:updateLink="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xpi"
-                   NS1:updateInfoURL="http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xhtml"
-                   NS1:updateHash="sha1:ddd72fdcac5b04fd546facdf47968cb2444b3b84" />
-  <RDF:Description RDF:about="rdf:#$Nmk9m3"
-                   NS1:version="1.0.5">
-    <NS1:targetApplication RDF:resource="rdf:#$Qmk9m3"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com"
-                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBALWzTajU7BUf92fzNWC9YeaPow1+UR0VBcHe8xTMQg3fs+SUNK7fwVSg0a68ozic98l/6lYiia9fW1gLJ/bCgzGYCWhADM4fgqWxvQKxg+JXYUPvpPH+W6Zsftryf/iifmVCOjsASvdkS8BFr5p90yCLm+ZNu7OrQWNrp473bW3k">
-    <NS1:updates RDF:resource="rdf:#$Mmk9m3"/>
-  </RDF:Description>
-  <RDF:Seq RDF:about="rdf:#$Mmk9m3">
-    <RDF:li RDF:resource="rdf:#$Nmk9m3"/>
-  </RDF:Seq>
+<RDF:RDF xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns="http://www.mozilla.org/2004/em-rdf#">
+<!-- Zotero Extension -->
+<RDF:Description about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com">
+  <updates>
+    <RDF:Seq>
+      <RDF:li>
+        <RDF:Description>
+          <version>1.0.6</version>
+          <targetApplication>
+            <RDF:Description>
+              <id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</id>
+              <minVersion>17</minVersion>
+              <maxVersion>29.*</maxVersion>
+              <updateLink>http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xpi</updateLink>
+			  <updateInfoURL>http://fbennett.github.io/bluebook-signals-for-zotero/bluebook-signals-for-zotero.xhtml</updateInfoURL>
+              <updateHash>sha1:9dd5da3ae307d2a4f4441a60c9ff84b37178985b</updateHash>
+            </RDF:Description>
+          </targetApplication>
+        </RDF:Description>
+      </RDF:li>
+    </RDF:Seq>
+  </updates>
+</RDF:Description>
 </RDF:RDF>
