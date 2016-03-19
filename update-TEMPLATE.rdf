@@ -10,7 +10,7 @@
               <rdf:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>39.0</em:minVersion>
-                <em:maxVersion>44.*</em:maxVersion>
+                <em:maxVersion>45.*</em:maxVersion>
                 <em:updateLink>https://github.com/Juris-M/bluebook-signals-for-zotero/releases/download/v4.0.27m13/jurism-v4.0.27m13.xpi</em:updateLink>
               </rdf:Description>
             </em:targetApplication>
