@@ -22,6 +22,8 @@ function build-the-plugin () {
         -name '*~' -prune -o \
         -name 'update-TEMPLATE.rdf' -prune -o \
         -name 'jm-sh' -prune -o \
+        -name '.gitignore' -prune -o \
+        -name '.gitmodules' -prune -o \
         -wholename './about.xul' -prune -o \
         -print0 | xargs -0 zip "${XPI_FILE}" >> "${LOG_FILE}"
 }
