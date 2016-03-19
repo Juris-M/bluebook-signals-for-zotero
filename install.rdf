@@ -8,6 +8,7 @@
     <em:creator>Frank Bennett</em:creator>
     <em:description>Adds a pulldown menu of signals to locator field</em:description>
     <em:updateURL>https://juris-m.github.io/bluebook-signals-for-zotero/update.rdf</em:updateURL>
+    <em:bootstrap>true</em:bootstrap>
     <em:unpack>true</em:unpack>
     <em:targetApplication>
       <Description>
