@@ -11,6 +11,7 @@ FORK="bluebook-signals-for-zotero"
 BRANCH="master"
 CLIENT="bluebook-signals-for-zotero"
 VERSION_ROOT="1.1."
+SIGNED_STUB="bluebook_signals_for_zotero-"
 
 function build-the-plugin () {
     set-install-version
