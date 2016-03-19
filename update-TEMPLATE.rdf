@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-    <rdf:Description rdf:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com">
-        <em:updates>
-            <rdf:Seq>
-                <rdf:li>
-                    <rdf:Description>
-                        <em:version>XXX</em:version>
-                        <em:targetApplication>
-                            <rdf:Description>
-                                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-                                <em:minVersion>39</em:minVersion>
-                                <em:maxVersion>44.*</em:maxVersion>
-                                <em:updateLink>https://github.com/Juris-M/bluebook-signals-for-zotero/releases/download/v4.0.27m13/jurism-v4.0.27m13.xpi</em:updateLink>
-                            </rdf:Description>
-                        </em:targetApplication>
-                    </rdf:Description>
-                </rdf:li>
-            </rdf:Seq>
-        </em:updates>
-    </rdf:Description>
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <rdf:Description rdf:about="urn:mozilla:extension:bluebook-signals-for-zotero@mystery-lab.com">
+    <em:updates>
+      <rdf:Seq>
+        <rdf:li>
+          <rdf:Description>
+            <em:version>XXX</em:version>
+            <em:targetApplication>
+              <rdf:Description>
+                <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+                <em:minVersion>39.0</em:minVersion>
+                <em:maxVersion>44.*</em:maxVersion>
+                <em:updateLink>https://github.com/Juris-M/bluebook-signals-for-zotero/releases/download/v4.0.27m13/jurism-v4.0.27m13.xpi</em:updateLink>
+              </rdf:Description>
+            </em:targetApplication>
+          </rdf:Description>
+        </rdf:li>
+      </rdf:Seq>
+    </em:updates>
+  </rdf:Description>
 </rdf:RDF>
+
