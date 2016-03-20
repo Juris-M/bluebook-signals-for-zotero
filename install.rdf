@@ -3,10 +3,10 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>bluebook-signals-for-zotero@mystery-lab.com</em:id>
     <em:type>2</em:type>
-    <em:name>Bluebook signals for Zotero</em:name>
+    <em:name>Bluebook signals</em:name>
     <em:version>1.1.5</em:version>
     <em:creator>Frank Bennett</em:creator>
-    <em:description>Adds a pulldown menu of signals to locator field</em:description>
+    <em:description>A menu activated with ctrl-s in the prefix field of Juris-M word processor plugins</em:description>
     <em:updateURL>https://juris-m.github.io/bluebook-signals-for-zotero/update.rdf</em:updateURL>
     <em:iconURL>chrome://bluebook-signals/skin/mlz_z_32px.png</em:iconURL>
     <em:bootstrap>true</em:bootstrap>
