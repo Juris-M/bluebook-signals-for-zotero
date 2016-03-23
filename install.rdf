@@ -30,6 +30,7 @@
     <em:targetApplication>
       <Description>
         <em:id>jurism@juris-m.github.io</em:id>
+        <!-- Juris-M -->
         <em:minVersion>4.0</em:minVersion>
         <em:maxVersion>4.0.*</em:maxVersion>
       </Description>
