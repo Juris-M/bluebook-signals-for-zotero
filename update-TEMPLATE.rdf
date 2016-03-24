@@ -9,7 +9,7 @@
             <em:targetApplication>
               <rdf:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-                <em:minVersion>39.0</em:minVersion>
+                <em:minVersion>38.0</em:minVersion>
                 <em:maxVersion>45.*</em:maxVersion>
                 <em:updateLink>https://github.com/Juris-M/bluebook-signals-for-zotero/releases/download/v1.1.7/bluebook-signals-for-zotero-v1.1.7-fx.xpi</em:updateLink>
               </rdf:Description>
