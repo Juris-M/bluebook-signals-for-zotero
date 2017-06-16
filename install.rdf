@@ -32,7 +32,7 @@
         <em:id>juris-m@juris-m.github.io</em:id>
         <!-- Juris-M -->
         <em:minVersion>4.0</em:minVersion>
-        <em:maxVersion>4.0.*</em:maxVersion>
+        <em:maxVersion>5.*</em:maxVersion>
       </Description>
     </em:targetApplication>
   </Description>
