@@ -10,7 +10,7 @@
               <rdf:Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>38.0</em:minVersion>
-                <em:maxVersion>45.*</em:maxVersion>
+                <em:maxVersion>54.*</em:maxVersion>
                 <em:updateLink>https://github.com/Juris-M/bluebook-signals-for-zotero/releases/download/v1.1.11/bluebook-signals-for-zotero-v1.1.11-fx.xpi</em:updateLink>
               </rdf:Description>
             </em:targetApplication>
